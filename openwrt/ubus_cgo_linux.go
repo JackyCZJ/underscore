@@ -1,4 +1,4 @@
-//go:build !mipsle
+//go:build mipsle
 
 package openwrt
 
@@ -357,10 +357,10 @@ func (ctx *UbusContext) AddObject(obj *UbusObject) error {
 			if len(cPolicies) == 0 {
 				cMethod = C.init_ubus_method(cMethodName, nil, 0)
 			} else {
-				cPoliciesPtr := (*C.struct_blobmsg_policy)(C.calloc(C.ulong(len(method.Fields)), C.sizeof_struct_blobmsg_policy))
+				cPoliciesPtr := (*C.struct_blobmsg_policy)(C.calloc(C.uint(len(method.Fields)), C.sizeof_struct_blobmsg_policy))
 				// ^defer free
 				freePtr.policiesPtrs = append(freePtr.policiesPtrs, cPoliciesPtr)
-				C.memcpy(unsafe.Pointer(cPoliciesPtr), unsafe.Pointer(&cPolicies[0]), C.sizeof_struct_blobmsg_policy*C.ulong(len(method.Fields)))
+				C.memcpy(unsafe.Pointer(cPoliciesPtr), unsafe.Pointer(&cPolicies[0]), C.sizeof_struct_blobmsg_policy*C.uint(len(method.Fields)))
 				cMethod = C.init_ubus_method(cMethodName, cPoliciesPtr, C.int(len(cPolicies)))
 			}
 
@@ -369,10 +369,10 @@ func (ctx *UbusContext) AddObject(obj *UbusObject) error {
 			lang.AddDMapValue(ubusHandlerMap, obj.Name, method.Name, method.Handler)
 		}
 
-		cMethodPtr := (*C.struct_ubus_method)(C.calloc(C.ulong(len(cMethods)), C.sizeof_struct_ubus_method))
+		cMethodPtr := (*C.struct_ubus_method)(C.calloc(C.uint(len(cMethods)), C.sizeof_struct_ubus_method))
 		// ^defer free
 		freePtr.methodPtrs = append(freePtr.methodPtrs, cMethodPtr)
-		C.memcpy(unsafe.Pointer(cMethodPtr), unsafe.Pointer(&cMethods[0]), C.sizeof_struct_ubus_method*C.ulong(len(cMethods)))
+		C.memcpy(unsafe.Pointer(cMethodPtr), unsafe.Pointer(&cMethods[0]), C.sizeof_struct_ubus_method*C.uint(len(cMethods)))
 
 		cObjTypePtr.methods = cMethodPtr
 		cObjTypePtr.n_methods = C.int(len(cMethods))
