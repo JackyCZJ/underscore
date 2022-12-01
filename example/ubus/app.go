@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/hzwesoft-github/underscore/openwrt"
+	"git.esixcloud.net/flash/underscore/openwrt"
 )
 
 var (

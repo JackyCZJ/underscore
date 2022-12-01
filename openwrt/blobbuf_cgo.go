@@ -8,7 +8,7 @@ import "C"
 import (
 	"unsafe"
 
-	"github.com/hzwesoft-github/underscore/json"
+	"git.esixcloud.net/flash/underscore/json"
 )
 
 type BlobBuf struct {

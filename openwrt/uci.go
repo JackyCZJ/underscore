@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hzwesoft-github/underscore/lang"
+	"git.esixcloud.net/flash/underscore/lang"
 )
 
 type UciClient struct {
