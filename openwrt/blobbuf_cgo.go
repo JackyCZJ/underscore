@@ -29,6 +29,7 @@ func (buf *BlobBuf) Init(id int) int {
 
 func (buf *BlobBuf) Free() {
 	C.blob_buf_free(buf.ptr)
+	C.free(unsafe.Pointer(buf.ptr))
 }
 
 func (buf *BlobBuf) AddJsonFrom(obj any) error {
