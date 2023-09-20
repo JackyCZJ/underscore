@@ -6,6 +6,7 @@ package openwrt
 */
 import "C"
 import (
+	"sync"
 	"unsafe"
 
 	"git.esixcloud.net/flash/underscore/json"
@@ -15,21 +16,25 @@ type BlobBuf struct {
 	ptr *C.struct_blob_buf
 }
 
+var p = C.calloc(1, C.sizeof_struct_blob_buf)
+var _ = C.memset(p, 0, C.sizeof_struct_blob_buf)
+var B = &BlobBuf{
+	ptr: (*C.struct_blob_buf)(p),
+}
+var lock sync.Mutex
+
 func NewBlobBuf() *BlobBuf {
-	p := C.calloc(1, C.sizeof_struct_blob_buf)
-	C.memset(p, 0, C.sizeof_struct_blob_buf)
-	return &BlobBuf{
-		ptr: (*C.struct_blob_buf)(p),
-	}
+	return B
 }
 
 func (buf *BlobBuf) Init(id int) int {
+	lock.Lock()
 	return int(C.blob_buf_init(buf.ptr, C.int(id)))
 }
 
 func (buf *BlobBuf) Free() {
+	lock.Unlock()
 	C.blob_buf_free(buf.ptr)
-	C.free(unsafe.Pointer(buf.ptr))
 }
 
 func (buf *BlobBuf) AddJsonFrom(obj any) error {
