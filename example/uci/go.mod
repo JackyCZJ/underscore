@@ -1,8 +1,10 @@
-module github.com/hzwesoft-github/underscore/example/uci
+module git.esixcloud.net/flash/underscore/example/uci
 
 go 1.19
 
-require github.com/hzwesoft-github/underscore v0.0.0-20221027081644-87f28482d993
+require git.esixcloud.net/flash/underscore v0.0.0
+
+replace git.esixcloud.net/flash/underscore => ../..
 
 require (
 	github.com/dlclark/regexp2 v1.7.0 // indirect

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hzwesoft-github/underscore/lang"
+	"git.esixcloud.net/flash/underscore/lang"
 	"github.com/sirupsen/logrus"
 	syslog_hook "github.com/sirupsen/logrus/hooks/syslog"
 )

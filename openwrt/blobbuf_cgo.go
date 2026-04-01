@@ -1,14 +1,18 @@
 package openwrt
 
 /*
+#include <stdlib.h>
+#include <string.h>
 #include <libubox/blob.h>
 #include <libubox/blobmsg_json.h>
 */
 import "C"
 import (
+	"errors"
+	"runtime"
 	"unsafe"
 
-	"github.com/hzwesoft-github/underscore/json"
+	"git.esixcloud.net/flash/underscore/json"
 )
 
 type BlobBuf struct {
@@ -16,19 +20,30 @@ type BlobBuf struct {
 }
 
 func NewBlobBuf() *BlobBuf {
-	p := C.calloc(1, C.sizeof_struct_blob_buf)
-	C.memset(p, 0, C.sizeof_struct_blob_buf)
-	return &BlobBuf{
+	var p = C.calloc(1, C.sizeof_struct_blob_buf)
+	var _ = C.memset(p, 0, C.sizeof_struct_blob_buf)
+	var B = &BlobBuf{
 		ptr: (*C.struct_blob_buf)(p),
 	}
+	runtime.SetFinalizer(B, (*BlobBuf).Free)
+	return B
 }
 
 func (buf *BlobBuf) Init(id int) int {
+	if buf == nil || buf.ptr == nil {
+		return -1
+	}
 	return int(C.blob_buf_init(buf.ptr, C.int(id)))
 }
 
 func (buf *BlobBuf) Free() {
+	if buf == nil || buf.ptr == nil {
+		return
+	}
+	runtime.SetFinalizer(buf, nil)
 	C.blob_buf_free(buf.ptr)
+	C.free(unsafe.Pointer(buf.ptr))
+	buf.ptr = nil
 }
 
 func (buf *BlobBuf) AddJsonFrom(obj any) error {
@@ -38,20 +53,27 @@ func (buf *BlobBuf) AddJsonFrom(obj any) error {
 
 	switch v := obj.(type) {
 	case string:
-		buf.AddJsonFromString(v)
+		if err := buf.AddJsonFromString(v); err != nil {
+			return err
+		}
 	default:
 		ret, err := json.Marshal(obj)
 		if err != nil {
 			return err
 		}
 
-		buf.AddJsonFromString(string(ret))
+		if err := buf.AddJsonFromString(string(ret)); err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (buf *BlobBuf) AddJsonFromString(str string) error {
+	if buf == nil || buf.ptr == nil {
+		return errors.New("blob buffer has been freed")
+	}
 	cstr := C.CString(str)
 	defer C.free(unsafe.Pointer(cstr))
 
