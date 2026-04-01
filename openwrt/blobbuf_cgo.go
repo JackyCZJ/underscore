@@ -12,7 +12,7 @@ import (
 	"runtime"
 	"unsafe"
 
-	"github.com/JackyCZJ/underscore/json"
+	"git.esixcloud.net/flash/underscore/json"
 )
 
 type BlobBuf struct {

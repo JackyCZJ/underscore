@@ -1,8 +1,8 @@
-module github.com/JackyCZJ/underscore/example/ubus
+module git.esixcloud.net/flash/underscore/example/ubus
 
 go 1.19
 
-require github.com/JackyCZJ/underscore v0.0.0
+require git.esixcloud.net/flash/underscore v0.0.0
 
 require (
 	github.com/dlclark/regexp2 v1.7.0 // indirect
@@ -11,4 +11,4 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 )
 
-replace github.com/JackyCZJ/underscore => ../..
+replace git.esixcloud.net/flash/underscore => ../..

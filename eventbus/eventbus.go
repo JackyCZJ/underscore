@@ -1,8 +1,8 @@
 package eventbus
 
 import (
-	"github.com/JackyCZJ/underscore/lang"
-	"github.com/JackyCZJ/underscore/openwrt"
+	"git.esixcloud.net/flash/underscore/lang"
+	"git.esixcloud.net/flash/underscore/openwrt"
 )
 
 type Event struct {

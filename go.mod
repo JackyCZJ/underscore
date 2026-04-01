@@ -1,4 +1,4 @@
-module github.com/JackyCZJ/underscore
+module git.esixcloud.net/flash/underscore
 
 go 1.19
 
