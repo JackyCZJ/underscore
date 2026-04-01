@@ -63,7 +63,7 @@ import (
 	"time"
 	"unsafe"
 
-	"git.esixcloud.net/flash/underscore/lang"
+	"github.com/JackyCZJ/underscore/lang"
 )
 
 const DEFAULT_SOCK = "/var/run/ubus/ubus.sock"

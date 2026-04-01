@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strconv"
 
-	"git.esixcloud.net/flash/underscore/openwrt"
+	"github.com/JackyCZJ/underscore/openwrt"
 )
 
 func printSections(sections ...openwrt.UciSection) {

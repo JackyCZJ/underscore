@@ -99,7 +99,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"git.esixcloud.net/flash/underscore/lang"
+	"github.com/JackyCZJ/underscore/lang"
 )
 
 type UciOptionType int

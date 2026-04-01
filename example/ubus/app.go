@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"git.esixcloud.net/flash/underscore/openwrt"
+	"github.com/JackyCZJ/underscore/openwrt"
 )
 
 var (
@@ -35,9 +35,10 @@ func ubusHandler(obj string, method string, req *openwrt.UbusRequestData, msg st
 	isclient.SendReply(req, msg)
 }
 
-func ubusDataHandler(msg string) {
+func ubusDataHandler(msg string) error {
 	fmt.Printf("client received: %s\n", msg)
 	fmt.Println()
+	return nil
 }
 
 func ubusEventHandler(event string, msg string) {
